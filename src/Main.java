@@ -7,16 +7,15 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int p = prime_number_giver();
-      //  System.out.println("Alice input a");
-      //  int a = sc.nextInt();
-      //  System.out.println("Bob input b");
-        // int b = sc.nextInt();
+        int g = element_g(p);
+        System.out.println("Alice input a");
+        int a = sc.nextInt();
+        System.out.println("Bob input b");
+        int b = sc.nextInt();
 
-       // key_generator(g, p, a, b);
+        key_generator(g, p, a, b);
 
     }
-
-
 
 
     private static void key_generator(int g, int p, int a, int b){
@@ -53,11 +52,25 @@ public class Main {
         return prime_number;
     }
 
-    private static int quick_exponentiation() {
-        int k = 2;
-        for (int i = 0; i < 100; i++){
-            k = (int) (k * Math.pow(k, i) % i);
+    private static int quick_exponentiation(int g, int p) {
+        int k = 1;
+        for (int i = 0; i < p; i++){
+            k = (k * g) % p;
         }
+        return  k;
+    }
+
+    private static int element_g(int p){
+        int g = 2;
+        int g_value = 0;
+
+        while (quick_exponentiation(g, p - 1) != 1 % p) {
+            if (quick_exponentiation(g, p - 1) == 1 % p) {
+                g_value = g;
+                break;
+            } else g++;
+        }
+        return g_value;
     }
 }
 
